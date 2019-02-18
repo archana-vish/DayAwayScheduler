@@ -1,5 +1,6 @@
 package com.deloitte.digital.Model;
 
+import com.deloitte.digital.Exceptions.InsufficientActivitiesException;
 import com.deloitte.digital.Exceptions.InvalidScheduleException;
 
 import java.util.ArrayList;
@@ -9,35 +10,39 @@ import java.util.logging.Logger;
 public class DigitalDaySchedule implements Schedule {
 
     List<Activity> digitalDayActivities;
-    List<Activity> masterList;
     long totalActivitiesDuration;
-    long teamSize;
+    int teamSize;
 
     Logger logger = Logger.getLogger(DigitalDaySchedule.class.getName());
 
 
     public void setTotalActivitiesDuration() throws InvalidScheduleException {
         if (this.digitalDayActivities.size() == 0) {
-            throw new InvalidScheduleException("No activities in the list of schedule");
+            throw new InvalidScheduleException("Empty activity list.");
         } else {
             this.totalActivitiesDuration = digitalDayActivities.stream()
                     .map(Activity::getDuration)
                     .reduce(0l, Long::sum);
+
+            if (this.totalActivitiesDuration < getMinimumTotalActivityTimePerDay()) {
+                throw new InvalidScheduleException("Activity timings not enough to fill the Digital Day Schedule");
+            }
         }
     }
 
-    public void setTeamSize() throws InvalidScheduleException {
+    public void setTeamSize() throws InvalidScheduleException, InsufficientActivitiesException {
         if (this.totalActivitiesDuration == 0) {
             throw new InvalidScheduleException("Schedule timing error");
         } else {
-            teamSize =  totalActivitiesDuration / getMinimumTotalActivityTimePerDay();
+            teamSize =  Math.toIntExact(totalActivitiesDuration / getMinimumTotalActivityTimePerDay());
+        } if (teamSize == 0) {
+            throw new InsufficientActivitiesException("Insufficient activities to form teams");
         }
         logger.info("Team size set to :: " + teamSize);
     }
 
     public void setDigitalDayActivities(List<Activity> digitalDayActivities) {
         this.digitalDayActivities = new ArrayList<>(digitalDayActivities);
-        this.masterList = new ArrayList<>(digitalDayActivities);
     }
 
     public List<Activity> getDigitalDayActivities() {
@@ -46,9 +51,5 @@ public class DigitalDaySchedule implements Schedule {
 
     public long getTeamSize() {
         return teamSize;
-    }
-
-    public void resetList() {
-        digitalDayActivities = new ArrayList<>(this.masterList);
     }
 }

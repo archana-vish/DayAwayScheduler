@@ -1,13 +1,14 @@
 package com.deloitte.digital.Model;
 
 import com.deloitte.digital.Service.DigitalDayScheduler;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+
 
 class ScheduleTest {
 
-    Schedule schedule = new DigitalDayScheduler(new DigitalDaySchedule());
+    Schedule schedule = new DigitalDaySchedule();
 
     @Test
     void getPreLunchMinutes() {
