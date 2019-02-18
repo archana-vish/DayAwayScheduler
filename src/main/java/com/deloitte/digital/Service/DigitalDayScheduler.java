@@ -79,9 +79,6 @@ public class DigitalDayScheduler{
                 }
             }
 
-            System.out.println("Starting at :: " + allActivities.get(counter));
-
-
             cachedActivities.add(allActivities.get(counter));
 
             ArrayList<Activity> eligibleForPreLunch = new ArrayList<>(allActivities);
@@ -90,7 +87,6 @@ public class DigitalDayScheduler{
             eligibleForPreLunch.removeAll(activityList);
             activityList = formActivityGroups(eligibleForPreLunch, allActivities.get(counter).getDuration(), digitalDaySchedule.getPreLunchDuration(), digitalDaySchedule.getPreLunchDuration(), false);
             List<Activity> preLunchList = new ArrayList<>(activityList);
-            logger.info("Prelunch group :: " + preLunchList);
 
             List<Activity> eligibleForPostLunch = digitalDaySchedule.getDigitalDayActivities();
             eligibleForPostLunch.removeAll(preLunchList);
@@ -101,7 +97,6 @@ public class DigitalDayScheduler{
             activityList = formActivityGroups(eligibleForPostLunch.subList(1, eligibleForPostLunch.size()), eligibleForPostLunch.get(0).getDuration(), digitalDaySchedule.getPostLunchMaxDuration(), digitalDaySchedule.getPostLunchMinDuration(), true);
 
             List<Activity> postLunchList = new ArrayList<>(activityList);
-            logger.info("Postlunch final group :: " + postLunchList);
             activityList.clear();
 
             List<Activity> finalList = new ArrayList<>();
@@ -175,6 +170,7 @@ public class DigitalDayScheduler{
         }
 
         for (int team = 1; team <= digitalDaySchedule.getTeamSize(); team++) {
+            System.out.println("==================================");
             System.out.println("Printing Schedule for Team " + team);
             System.out.println("==================================");
             listOfTimetables.get(team - 1).stream()
