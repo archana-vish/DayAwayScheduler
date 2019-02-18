@@ -1,6 +1,5 @@
 package com.deloitte.digital.Service;
 
-import com.deloitte.digital.Exceptions.InsufficientActivitiesException;
 import com.deloitte.digital.Exceptions.InvalidScheduleException;
 import com.deloitte.digital.Model.Activity;
 import com.deloitte.digital.Model.DigitalDaySchedule;

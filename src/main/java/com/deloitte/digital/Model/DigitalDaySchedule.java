@@ -1,6 +1,5 @@
 package com.deloitte.digital.Model;
 
-import com.deloitte.digital.Exceptions.InsufficientActivitiesException;
 import com.deloitte.digital.Exceptions.InvalidScheduleException;
 
 import java.util.ArrayList;
