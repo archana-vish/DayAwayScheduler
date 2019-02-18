@@ -30,13 +30,13 @@ public class DigitalDaySchedule implements Schedule {
         }
     }
 
-    public void setTeamSize() throws InvalidScheduleException, InsufficientActivitiesException {
+    public void setTeamSize() throws InvalidScheduleException {
         if (this.totalActivitiesDuration == 0) {
             throw new InvalidScheduleException("Schedule timing error");
         } else {
             teamSize =  Math.toIntExact(totalActivitiesDuration / getMinimumTotalActivityTimePerDay());
         } if (teamSize == 0) {
-            throw new InsufficientActivitiesException("Insufficient activities to form teams");
+            throw new InvalidScheduleException("Insufficient activities to form teams");
         }
         logger.info("Team size set to :: " + teamSize);
     }

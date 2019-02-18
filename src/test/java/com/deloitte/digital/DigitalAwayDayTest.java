@@ -7,7 +7,6 @@ import com.deloitte.digital.Model.DigitalDaySchedule;
 import com.deloitte.digital.Service.ScheduleIntialiser;
 import org.junit.jupiter.api.Test;
 
-import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +57,17 @@ class DigitalAwayDayTest {
         } catch(InvalidActivityFormatException invalidActivityFormat) {}
     }
 
+    // 4.2. Duplicate entries
+    @Test
+    void should_handle_duplicate_activities_with_different_duration() {
+        scheduleIntialiser = new ScheduleIntialiser();
+
+        Throwable exception = assertThrows(InvalidActivityFormatException.class, () -> {
+            scheduleIntialiser.getActivitiesFromInput("duplicateActivity.txt", "sprint");
+        });
+        assertEquals(exception.getMessage(),"List contains duplicate. Please check file.");
+    }
+
     // 5. Insufficient Activities to fill the day
     @Test
     void should_throw_exception_if_insufficient_activities_in_list() {
@@ -95,6 +105,8 @@ class DigitalAwayDayTest {
 
     }
 
+
+
     // 10. Positive read
     @Test
     void should_form_two_sets_of_timetables_for_correct_known_file() {
@@ -102,7 +114,7 @@ class DigitalAwayDayTest {
             digitalAwayDay = new DigitalAwayDay();
             digitalAwayDay.getDigitalDaySchedule("activities.txt", "sprint");
             assertEquals(2, digitalAwayDay.getDigitalDayScheduler().getListOfTimetables().size());
-        } catch(InvalidActivityFormatException|InsufficientActivitiesException|InvalidScheduleException|Exception e) {
+        } catch(InvalidActivityFormatException|InvalidScheduleException|Exception e) {
             System.out.println(e.getMessage());
         }
     }

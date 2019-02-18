@@ -2,8 +2,12 @@ package com.deloitte.digital.Model;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 
+/**
+ * Model to store the final timetable
+ * A Timetable has a start time, title and duration
+ * Eg: 009:00 AM : Duck Herding 60min
+ */
 public class Timetable {
     String name;
     long duration;

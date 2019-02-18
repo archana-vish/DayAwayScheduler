@@ -1,7 +1,10 @@
 package com.deloitte.digital.Model;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
+/**
+ * Model to store Activity
+ * An activity has a title and a duration
+ * Eg: 'Duck herding 60min' => Title: Duck herding Duration: 60l
+ */
 
 public  class Activity {
 

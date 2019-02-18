@@ -1,6 +1,5 @@
 package com.deloitte.digital;
 
-import com.deloitte.digital.Exceptions.InsufficientActivitiesException;
 import com.deloitte.digital.Exceptions.InvalidActivityFormatException;
 import com.deloitte.digital.Exceptions.InvalidScheduleException;
 import com.deloitte.digital.Model.Activity;
@@ -18,7 +17,14 @@ public class DigitalAwayDay {
 
     private DigitalDayScheduler digitalDayScheduler;
 
-    public void getDigitalDaySchedule(String filename, String sprintName) throws InvalidActivityFormatException, InvalidScheduleException, InsufficientActivitiesException{
+    /**
+     * Method to call the Digital Day Scheduler
+     * @param filename input file name
+     * @param sprintName sprint name
+     * @throws InvalidActivityFormatException if the lines are not formatted as required
+     * @throws InvalidScheduleException if the time/duration do not add up to the required value
+     */
+    public void getDigitalDaySchedule(String filename, String sprintName) throws InvalidActivityFormatException, InvalidScheduleException{
             ScheduleIntialiser scheduleIntialiser = new ScheduleIntialiser();
             List<Activity> activities =
                     scheduleIntialiser.getActivitiesFromInput(filename, sprintName);
@@ -39,10 +45,8 @@ public class DigitalAwayDay {
         try {
             DigitalAwayDay digitalAwayDay = new DigitalAwayDay();
             digitalAwayDay.getDigitalDaySchedule("activities.txt", "sprint");
-        } catch(InvalidActivityFormatException|InsufficientActivitiesException|InvalidScheduleException|Exception e) {
-           // e.printStackTrace();
+        } catch(InvalidActivityFormatException|InvalidScheduleException|Exception e) {
             logger.log(Level.SEVERE, "Error in processing the file.");
-            System.out.println(e.getMessage());
         }
     }
 }
